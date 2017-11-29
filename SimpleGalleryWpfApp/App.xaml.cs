@@ -13,5 +13,10 @@ namespace SimpleGalleryWpfApp
     /// </summary>
     public partial class App : Application
     {
+        private void OnApplicationStartup(object sender, StartupEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+        }
     }
 }
