@@ -20,9 +20,20 @@ namespace SimpleGalleryWpfApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        public PhotoCollection Photos;
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void OnImagesDirChangeClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            ImagesDir.Text = Environment.CurrentDirectory + "\\images";
         }
     }
 }

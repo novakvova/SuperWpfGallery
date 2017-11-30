@@ -4,6 +4,6 @@
              xmlns:er="clr-namespace:SimpleGalleryWpfApp"
              Startup="OnApplicationStartup">
     <Application.Resources>
-         
+        <ObjectDataProvider x:Key="Photos" ObjectType="{x:Type er:PhotoCollection }"/>
     </Application.Resources>
 </Application>

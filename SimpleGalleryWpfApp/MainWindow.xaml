@@ -3,10 +3,79 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SimpleGalleryWpfApp"
+        xmlns:er="clr-namespace:SimpleGalleryWpfApp"
         mc:Ignorable="d"
+        Loaded="OnLoaded"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+    <Window.Resources>
+        <!-- Photo Template -->
+        <DataTemplate DataType="{x:Type er:Photo}">
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Margin="6">
+                <!-- Drop Shadow -->
+                <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="4" Background="#44000000">
+                    <Border.RenderTransform>
+                        <TranslateTransform X="5" Y="5" />
+                    </Border.RenderTransform>
+                    <Border.BitmapEffect>
+                        <BlurBitmapEffect Radius="8" />
+                    </Border.BitmapEffect>
+                </Border>
+                <!-- Image Template -->
+                <Border Padding="4" Background="White" BorderBrush="#22000000" BorderThickness="1">
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="{Binding Image}"/>
+                        <Label Content="sdfaf">
+                            <!--<Label.ToolTip>
+                               Only JPeg images with a stored thumbnail will display a thumbnail during preview.
+                           </Label.ToolTip>-->
+                        </Label>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </DataTemplate>
+
+
+        <Style TargetType="{x:Type ListBox}" x:Key="PhotoListBoxStyle">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <WrapPanel Margin="5" IsItemsHost="True" Orientation="Horizontal"
+                                   ItemHeight="200"
+                                   ItemWidth="200"
+                                   VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="10" DataContext="{Binding Source={StaticResource Photos}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="250"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Column="0" Grid.Row="0" Margin="0,0,0,10">
+            <Button DockPanel.Dock="Right" Width="50" Click="OnImagesDirChangeClick">Change</Button>
+            <Label DockPanel.Dock="Left" Margin="0,0,10,0">Path:</Label>
+            <TextBox Name="ImagesDir" Margin="10,0" />
+        </DockPanel>
+        <GroupBox Grid.Column="0" Grid.Row="1">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <ListBox
+                    IsSynchronizedWithCurrentItem="True"
+                    Name="PhotosListBox"
+                    Style="{StaticResource PhotoListBoxStyle}"
+                    Margin="5"
+                    SelectionMode="Extended"
+                    ItemsSource="{Binding}"
+                    SelectedIndex="0">
+                    
+                </ListBox>
+            </ScrollViewer>
+        </GroupBox>
     </Grid>
 </Window>
